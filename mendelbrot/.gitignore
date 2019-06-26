@@ -4,3 +4,4 @@ target
 *.creator
 *.files
 *.includes
+*.user
