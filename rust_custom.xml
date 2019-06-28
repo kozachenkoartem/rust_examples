@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2015 The Rust Project Developers
+
+    Permission is hereby granted, free of charge, to any
+    person obtaining a copy of this software and associated
+    documentation files (the "Software"), to deal in the
+    Software without restriction, including without
+    limitation the rights to use, copy, modify, merge,
+    publish, distribute, sublicense, and/or sell copies of
+    the Software, and to permit persons to whom the Software
+    is furnished to do so, subject to the following
+    conditions:
+
+    The above copyright notice and this permission notice
+    shall be included in all copies or substantial portions
+    of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+    ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+    TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+    PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+    SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+    IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE language SYSTEM "language.dtd"
+[
+	<!-- FIXME: Kate's regex engine has very limited support for
+	predefined char classes, so making rustIdent consistent with actual
+	Rust identifiers will be a bit difficult -->
+	<!ENTITY rustIdent "[a-zA-Z_][a-zA-Z_0-9]*">
+	<!ENTITY rustIntSuf "([iu](8|16|32|64)?)?">
+]>
+<language name="Rust" version="4" kateversion="5.0" section="Sources" extensions="*.rs" mimetype="text/rust" priority="20" license="MIT" author="The Rust Project Developers">
+<highlighting>
+	<list name="mod">
+		<item> mod </item>
+	</list>
+	<list name="use">
+		<item> use </item>
+	</list>
+	<list name="struct">
+		<item> enum </item>
+		<item> struct </item>
+		<item> trait </item>
+	</list>
+	<list name="impl">
+		<item> impl </item>
+	</list>
+	<list name="fn">
+		<item> fn </item>
+	</list>
+	<list name="const">
+		<item> const </item>
+	</list>
+	<list name="as">
+		<item> as </item>
+	</list>
+	<list name="let">
+		<item> let </item>
+		<item> for </item>
+		<item> static </item>
+	</list>
+	<list name="type">
+		<item> type </item>
+	</list>
+	<list name="keywords">
+		<item> abstract </item>
+		<item> alignof </item>
+		<item> as </item>
+		<item> become </item>
+		<item> box </item>
+		<item> break </item>
+		<item> continue </item>
+		<item> crate </item>
+		<item> do </item>
+		<item> else </item>
+		<item> extern </item>
+		<item> final </item>
+		<item> if </item>
+		<item> in </item>
+		<item> loop </item>
+		<item> macro </item>
+		<item> match </item>
+		<item> move </item>
+		<item> offsetof </item>
+		<item> override </item>
+		<item> priv </item>
+		<item> proc </item>
+		<item> pub </item>
+		<item> pure </item>
+		<item> ref </item>
+		<item> return </item>
+		<item> sizeof </item>
+		<item> super </item>
+		<item> typeof </item>
+		<item> unsafe </item>
+		<item> unsized </item>
+		<item> virtual </item>
+		<item> where </item>
+		<item> while </item>
+		<item> yield </item>
+	</list>
+	<list name="self">
+		<item> Self </item>
+		<item> self </item>
+		<item> mut </item>
+	</list>
+	<list name="constants">
+		<item> true </item>
+		<item> false </item>
+		<item> Some </item>
+		<item> None </item>
+		<item> Ok </item>
+		<item> Err </item>
+		<item> Success </item>
+		<item> Failure </item>
+		<item> Cons </item>
+		<item> Nil </item>
+	</list>
+	<list name="cconstants">
+		<item> EXIT_FAILURE </item>
+		<item> EXIT_SUCCESS </item>
+		<item> RAND_MAX </item>
+		<item> EOF </item>
+		<item> SEEK_SET </item>
+		<item> SEEK_CUR </item>
+		<item> SEEK_END </item>
+		<item> _IOFBF </item>
+		<item> _IONBF </item>
+		<item> _IOLBF </item>
+		<item> BUFSIZ </item>
+		<item> FOPEN_MAX </item>
+		<item> FILENAME_MAX </item>
+		<item> L_tmpnam </item>
+		<item> TMP_MAX </item>
+		<item> O_RDONLY </item>
+		<item> O_WRONLY </item>
+		<item> O_RDWR </item>
+		<item> O_APPEND </item>
+		<item> O_CREAT </item>
+		<item> O_EXCL </item>
+		<item> O_TRUNC </item>
+		<item> S_IFIFO </item>
+		<item> S_IFCHR </item>
+		<item> S_IFBLK </item>
+		<item> S_IFDIR </item>
+		<item> S_IFREG </item>
+		<item> S_IFMT </item>
+		<item> S_IEXEC </item>
+		<item> S_IWRITE </item>
+		<item> S_IREAD </item>
+		<item> S_IRWXU </item>
+		<item> S_IXUSR </item>
+		<item> S_IWUSR </item>
+		<item> S_IRUSR </item>
+		<item> F_OK </item>
+		<item> R_OK </item>
+		<item> W_OK </item>
+		<item> X_OK </item>
+		<item> STDIN_FILENO </item>
+		<item> STDOUT_FILENO </item>
+		<item> STDERR_FILENO </item>
+	</list>
+	<contexts>
+		<context attribute="Normal Text" lineEndContext="#stay" name="Normal">
+			<DetectSpaces/>
+			<StringDetect String="extern crate " attribute="Keyword" context="Include"/>
+			<keyword String="fn" attribute="Keyword" context="Function"/>
+			<keyword String="mod" attribute="Keyword" context="Include"/>
+			<keyword String="use" attribute="Keyword" context="Use"/>
+			<keyword String="type" attribute="Keyword" context="TypeDecl"/>
+			<keyword String="struct" attribute="Keyword" context="Struct"/>
+			<keyword String="impl" attribute="Keyword" context="Impl"/>
+			<keyword String="const" attribute="Keyword" context="Let"/>
+			<keyword String="let" attribute="Keyword" context="Let"/>
+			<keyword String="keywords" attribute="Keyword"/>
+			<DetectChar char="|" attribute="Match"/>
+			<DetectChar char="?" attribute="Match"/>
+			<RegExpr String=": ([\[\(&amp;\*]|&rustIdent;)" attribute="Type" context="TypeName" lookAhead="true"/>
+			<RegExpr String="\.&rustIdent;" attribute="Trait" context="Trait" lookAhead="true"/>
+			<RegExpr String="[a-zA-Z_][a-zA-Z_0-9:]* \{ [a-zA-Z_][a-zA-Z_0-9 ,\.]*\} => " attribute="Type" context="MatchAnone" lookAhead="true"/>
+			<RegExpr String="\([a-zA-Z_][a-zA-Z_0-9 ,\.\(\)]*=> " attribute="Definition" context="Match" lookAhead="true"/>
+			<Detect2Chars char="=" char1=">" attribute="Match"/>
+			<Detect2Chars char="-" char1=">" attribute="Normal Text" context="TypeName"/>
+			<keyword String="self" attribute="Self"/>
+			<keyword String="constants" attribute="Constant"/>
+			<keyword String="cconstants" attribute="CConstant"/>
+			<Detect2Chars char="/" char1="/" attribute="Comment" context="Commentar 1"/>
+			<Detect2Chars char="/" char1="*" attribute="Comment" context="Commentar 2" beginRegion="Comment"/>
+			<RegExpr String="0x[0-9a-fA-F_]+&rustIntSuf;" attribute="Number"/>
+			<RegExpr String="0o[0-7_]+&rustIntSuf;" attribute="Number"/>
+			<RegExpr String="0b[0-1_]+&rustIntSuf;" attribute="Number"/>
+			<RegExpr String="[0-9][0-9_]*\.[0-9_]*([eE][+-]?[0-9_]+)?(f32|f64|f)?" attribute="Number"/>
+			<RegExpr String="[0-9][0-9_]*&rustIntSuf;" attribute="Number"/>
+			<Detect2Chars char="#" char1="[" attribute="Attribute" context="Attribute" beginRegion="Attribute"/>
+			<StringDetect String="#![" attribute="Attribute" context="Attribute" beginRegion="Attribute"/>
+			<RegExpr String="&rustIdent;::(?=[^&lt;])" attribute="Scope"/>
+			<RegExpr String="&lt;(?=[^ ])" attribute="Normal Text" context="TypeSpec"/>
+			<RegExpr String="&rustIdent;!" attribute="Macro"/>
+			<RegExpr String="&apos;&rustIdent;(?!&apos;)" attribute="Lifetime"/>
+			<RegExpr String="_(?=[^a-zA-Z_0-9])" attribute="Match"/>
+			<RegExpr String="[a-zA-Z_][:a-zA-Z_0-9&lt;&gt;]* \{ .+" attribute="Type" context="LetTypeSpec" lookAhead="true"/>
+			<DetectChar char="{" attribute="Symbol" beginRegion="Brace" />
+			<DetectChar char="}" attribute="Symbol" endRegion="Brace" />
+                        <Detect2Chars char="r" char1="&quot;" attribute="String" context="RawString"/>
+                        <StringDetect String="r##&quot;" attribute="String" context="RawHashed2"/>
+                        <StringDetect String="r#&quot;" attribute="String" context="RawHashed1"/>
+			<DetectChar char="&quot;" attribute="String" context="String"/>
+ 			<Detect2Chars char="b" char1="&apos;" attribute="Character" context="Character"/>
+			<DetectChar char="&apos;" attribute="Character" context="Character"/>
+			<DetectChar char="[" attribute="Symbol" beginRegion="Bracket" />
+			<DetectChar char="]" attribute="Symbol" endRegion="Bracket" />
+			<DetectIdentifier/>
+		</context>
+		<context attribute="Attribute" lineEndcontext="#pop" name="Attribute">
+			<DetectChar char="]" attribute="Attribute" context="#pop" endRegion="Attribute"/>
+			<IncludeRules context="#pop"/>
+		</context>
+		<context attribute="Trait" lineEndcontext="#pop" name="Trait">
+			<DetectChar char="." attribute="Normal Text"/>
+			<RegExpr String="[^a-zA-Z_0-9]" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="(" attribute="Normal Text" context="#pop"/>
+			<DetectChar char=";" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="&lt;" attribute="Normal Text" context="TypeSpec"/>
+		</context>
+		<context attribute="Definition" lineEndcontext="#pop" name="Function">
+			<DetectChar char="(" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="&lt;" attribute="Normal Text" context="TypeSpec"/>
+		</context>
+		<context attribute="Definition" lineEndcontext="#pop" name="Type">
+			<DetectChar char="=" attribute="Normal Text" context="TypeName"/>
+			<DetectChar char=";" attribute="Normal Text" context="#pop"/>
+		</context>
+		<context attribute="Type" lineEndcontext="#pop" name="MatchAnone">
+			<DetectChar char="{" attribute="Normal Text" context="Match"/>
+			<Detect2Chars char="=" char1=">" attribute="Match" context="#pop"/>
+		</context>
+		<context attribute="Definition" lineEndcontext="#pop" name="Match">
+			<DetectChar char="," attribute="Normal Text"/>
+			<DetectChar char="." attribute="Normal Text"/>
+			<DetectChar char="(" attribute="Normal Text"/>
+			<DetectChar char=")" attribute="Normal Text"/>
+			<DetectChar char="[" attribute="Normal Text"/>
+			<DetectChar char="]" attribute="Normal Text"/>
+			<DetectChar char="}" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="*" attribute="Normal Text"/>
+			<DetectChar char="&amp;" attribute="Normal Text"/>
+			<StringDetect String="mut" attribute="Self"/>
+			<keyword String="const" attribute="Keyword"/>
+			<RegExpr String="_(?=[^a-zA-Z_0-9])" attribute="Match"/>
+			<Detect2Chars char="=" char1=">" attribute="Match" context="#pop"/>
+		</context>
+		<context attribute="Type" lineEndcontext="#pop" name="TypeSpec">
+			<RegExpr String="&apos;&rustIdent;(?!&apos;)" attribute="Lifetime"/>
+			<keyword String="self" attribute="Self"/>
+			<DetectChar char="=" attribute="Normal Text"/>
+			<DetectChar char="!" attribute="Normal Text"/>
+			<DetectChar char="+" attribute="Normal Text"/>
+			<DetectChar char="&lt;" attribute="Normal Text" context="TypeSpec"/>
+			<DetectChar char="(" attribute="Normal Text"/>
+			<DetectChar char=")" attribute="Normal Text"/>
+			<Detect2Chars char=":" char1=" " attribute="Constant"/>
+			<DetectChar char=":" attribute="Normal Text"/>
+			<DetectChar char="," attribute="Normal Text"/>
+			<DetectChar char="[" attribute="Normal Text"/>
+			<DetectChar char="]" attribute="Normal Text"/>
+			<DetectChar char="*" attribute="Normal Text"/>
+			<DetectChar char="&amp;" attribute="Normal Text"/>
+			<StringDetect String="mut" attribute="Self"/>
+			<keyword String="const" attribute="Keyword"/>
+			<keyword String="as" attribute="Keyword"/>
+			<RegExpr String="_(?=[^a-zA-Z_0-9])" attribute="Match"/>
+			<DetectChar char="{" attribute="Normal Text"/>
+ 			<DetectChar char="&gt;" attribute="Normal Text" context="#pop"/>
+		</context>
+		<context attribute="Definition" lineEndcontext="#pop" name="TypeDecl">
+			<DetectChar char="=" attribute="Normal Text" context="TypeName"/>
+		</context>
+ 		<context attribute="Type" lineEndcontext="#pop" name="TypeName">
+			<RegExpr String="&apos;&rustIdent;(?!&apos;)" attribute="Lifetime"/>
+			<RegExpr String=", &rustIdent;: " attribute="Normal Text"/>
+			<DetectChar char="&lt;" attribute="Normal Text" context="TypeSpec"/>
+			<DetectChar char="(" attribute="Normal Text"/>
+			<DetectChar char=")" attribute="Normal Text"/>
+			<DetectChar char="+" attribute="Normal Text"/>
+			<Detect2Chars char="-" char1=">" attribute="Normal Text"/>
+			<DetectChar char=":" attribute="Normal Text"/>
+			<DetectChar char="," attribute="Normal Text"/>
+			<DetectChar char="[" attribute="Normal Text"/>
+			<DetectChar char="]" attribute="Normal Text"/>
+			<DetectChar char="*" attribute="Normal Text"/>
+			<DetectChar char="|" attribute="Match" context="#pop"/>
+			<keyword String="impl" attribute="Keyword" context="Impl"/>
+			<RegExpr String="\.&rustIdent;" attribute="Trait" context="Trait" lookAhead="true"/>
+			<keyword String="self" attribute="Self"/>
+			<DetectChar char="&amp;" attribute="Normal Text"/>
+			<StringDetect String="mut" attribute="Self"/>
+			<keyword String="const" attribute="Keyword"/>
+			<RegExpr String="&rustIdent;\." attribute="Normal Text" context="#pop" lookAhead="true"/>
+			<RegExpr String="&rustIdent;::[:a-zA-Z_0-9]*\(" attribute="Normal Text" context="#pop" lookAhead="true"/>
+ 			<Detect2Chars char="b" char1="&apos;" attribute="Character" context="Character"/>
+			<keyword String="constants" attribute="Constant" context="#pop"/>
+			<DetectChar char="}" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="{" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="=" attribute="Normal Text" context="#pop" lookAhead="true"/>
+			<DetectChar char=";" attribute="Normal Text" context="#pop"/>
+		</context>
+		<context attribute="Type" lineEndcontext="#pop" name="Impl">
+			<keyword String="let" attribute="Keyword"/>
+			<DetectChar char="+" attribute="Normal Text"/>
+			<DetectChar char="{" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="&lt;" attribute="Normal Text" context="TypeSpec"/>
+			<DetectChar char="(" attribute="Normal Text" context="TypeName"/>
+			<DetectChar char=")" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="," attribute="Normal Text" context="#pop" lookAhead="true"/>
+		</context>
+		<context attribute="Definition" lineEndcontext="#pop" name="Struct">
+			<DetectChar char="(" attribute="Normal Text" context="TypeName"/>
+			<DetectChar char="{" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="&lt;" attribute="Normal Text" context="TypeSpec"/>
+		</context>
+		<context attribute="Include" lineEndcontext="#pop" name="Include">
+			<DetectChar char=";" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="{" attribute="Normal Text" context="#pop"/>
+		</context>
+		<context attribute="Scope" lineEndcontext="#pop" name="Use">
+			<keyword String="keywords" attribute="Include"/>
+			<keyword String="self" attribute="Include"/>
+			<DetectChar char="*" attribute="Normal Text"/>
+			<DetectChar char=":" attribute="Normal Text"/>
+			<DetectChar char="{" attribute="Normal Text"/>
+			<DetectChar char="}" attribute="Normal Text"/>
+			<DetectChar char="," attribute="Normal Text"/>
+			<DetectChar char=";" attribute="Normal Text" context="#pop"/>
+		</context>
+		<context attribute="Definition" lineEndcontext="#pop" name="Let">
+			<DetectChar char=";" attribute="Normal Text" context="#pop"/>
+			<DetectChar char=")" attribute="Normal Text" context="#pop"/>
+			<DetectChar char="=" attribute="Normal Text" context="#pop"/>
+			<DetectChar char=":" attribute="Normal Text" context="TypeName"/>
+			<StringDetect String=" in " attribute="Keyword" context="#pop" lookAhead="true"/>
+			<keyword String="constants" attribute="Constant"/>
+			<DetectChar char="&amp;" attribute="Normal Text"/>
+			<DetectChar char="(" attribute="Normal Text"/>
+			<DetectChar char="," attribute="Normal Text"/>
+			<RegExpr String="_(?=[^a-zA-Z_0-9])" attribute="Match"/>
+			<StringDetect String="mut" attribute="Self"/>
+		</context>
+		<context attribute="Type" lineEndcontext="#pop" name="LetTypeSpec">
+			<DetectChar char="," attribute="Normal Text"/>
+			<DetectChar char=":" attribute="Normal Text"/>
+			<DetectChar char="&lt;" attribute="Normal Text"/>
+			<DetectChar char="&gt;" attribute="Normal Text"/>
+			<DetectChar char="{" attribute="Normal Text" context="#pop"/>
+		</context>
+                <context attribute="String" lineEndContext="#stay" name="String">
+                        <DetectChar char="\" attribute="CharEscape" context="CharEscape"/>
+                        <DetectChar attribute="String" context="#pop" char="&quot;"/>
+                </context>
+		<context attribute="String" lineEndContext="#stay" name="RawString">
+			<DetectChar attribute="String" context="#pop" char="&quot;"/>
+		</context>
+                <context attribute="String" lineEndContext="#stay" name="RawHashed1">
+                        <Detect2Chars attribute="String" context="#pop" char="&quot;" char1="#"/>
+                </context>
+                <context attribute="String" lineEndContext="#stay" name="RawHashed2">
+                        <StringDetect attribute="String" context="#pop" String="&quot;##"/>
+                </context>
+		<context attribute="Character" lineEndContext="#pop" name="Character">
+			<DetectChar char="\" attribute="CharEscape" context="CharEscape"/>
+			<DetectChar attribute="Character" context="#pop" char="&apos;"/>
+		</context>
+		<context attribute="CharEscape" lineEndContext="#pop" name="CharEscape">
+			<AnyChar String="nrt\&apos;&quot;" attribute="CharEscape" context="#pop"/>
+			<RegExpr String="x[0-9a-fA-F]{2}" attribute="CharEscape" context="#pop"/>
+			<RegExpr String="u\{[0-9a-fA-F]{1,6}\}" attribute="CharEscape" context="#pop"/>
+			<RegExpr String="u[0-9a-fA-F]{4}" attribute="CharEscape" context="#pop"/>
+			<RegExpr String="U[0-9a-fA-F]{8}" attribute="CharEscape" context="#pop"/>
+			<RegExpr String="." attribute="Error" context="#pop"/>
+		</context>
+		<context attribute="Comment" lineEndContext="#pop" name="Commentar 1"/>
+		<context attribute="Comment" lineEndContext="#stay" name="Commentar 2">
+			<DetectSpaces/>
+			<Detect2Chars char="/" char1="*" attribute="Comment" context="Commentar 2" beginRegion="Comment"/>
+			<Detect2Chars char="*" char1="/" attribute="Comment" context="#pop" endRegion="Comment"/>
+		</context>
+	</contexts>
+	<itemDatas>
+		<itemData name="Normal Text"  defStyleNum="dsNormal"/>
+		<itemData name="Keyword"      defStyleNum="dsKeyword"  color="#808000" />
+		<itemData name="Self"         defStyleNum="dsKeyword"  color="#770000"/>
+		<itemData name="Match"        defStyleNum="dsKeyword"  color="#c00000" bold="1"/>
+		<itemData name="Type"         defStyleNum="dsDataType" color="#770088"/>
+		<itemData name="Trait"        defStyleNum="dsBuiltIn"  color="#ce5c00"/>
+		<itemData name="Include"      defStyleNum="dsConstant" color="#000080"/>
+		<itemData name="Constant"     defStyleNum="dsConstant" color="#000080" bold="1"/>
+		<itemData name="CConstant"    defStyleNum="dsConstant" color="#000080" bold="1"/>
+		<itemData name="Lifetime"     defStyleNum="dsConstant" color="#008000" bold="1"/>
+		<itemData name="Definition"   defStyleNum="dsKeyword"  color="#007474"/>
+		<itemData name="Comment"      defStyleNum="dsComment"/>
+		<itemData name="Scope"        defStyleNum="dsKeyword"  color="#770088"/>
+		<itemData name="Number"       defStyleNum="dsDecVal"/>
+		<itemData name="String"       defStyleNum="dsString"/>
+		<itemData name="CharEscape"   defStyleNum="dsSpecialChar"/>
+		<itemData name="Character"    defStyleNum="dsChar"/>
+		<itemData name="Macro"        defStyleNum="dsPreprocessor"/>
+		<itemData name="Symbol"       defStyleNum="dsOperator"/>
+		<itemData name="Attribute"    defStyleNum="dsAttribute"/>
+		<itemData name="Error"        defStyleNum="dsError"/>
+	</itemDatas>
+</highlighting>
+<general>
+	<comments>
+		<comment name="singleLine" start="//" />
+		<comment name="multiLine" start="/*" end="*/" region="Comment"/>
+	</comments>
+	<keywords casesensitive="1" />
+</general>
+</language>
+
